@@ -51,12 +51,12 @@ const Dashboard = () => {
       try {
         if (userDetails?.isCreator) {
           // Fetch projects by the current creator
-          const projectsQuery = query(collection(db, 'events'), where('addedBy', '==', id));
+          const projectsQuery = query(collection(db, 'rooms'), where('addedBy', '==', id));
           const projectsSnapshot = await getDocs(projectsQuery);
           const projectsData = projectsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 
           // Fetch donations for the current creator's projects
-          const donationsQuery = query(collection(db, 'eventbooking'), where('projectId', 'in', projectsData.map(project => project.id)));
+          const donationsQuery = query(collection(db, 'roombooking'), where('projectId', 'in', projectsData.map(project => project.id)));
           const donationsSnapshot = await getDocs(donationsQuery);
           const donationsData = donationsSnapshot.docs.map(doc => doc.data());
 
@@ -73,7 +73,7 @@ const Dashboard = () => {
           setTotalDonations(totalDonationsAmount);
         } else if (userDetails?.isTourist) {
           // Fetch donations made by the current donor
-          const donationsQuery = query(collection(db, 'eventbooking'), where('userId', '==', id));
+          const donationsQuery = query(collection(db, 'roombooking'), where('userId', '==', id));
           const donationsSnapshot = await getDocs(donationsQuery);
           const donationsData = donationsSnapshot.docs.map(doc => doc.data());
 
@@ -118,7 +118,7 @@ const Dashboard = () => {
 
               <p className="hidden text-white/90 sm:mt-4 sm:block">
                  {userDetails.isCreator &&  (<>Welcome to your dashboard! Track your events and manage your active and expired events efficiently.</>)}
-                 {userDetails.isTourist &&  (<>Welcome to your dashboard! Browse through events, Track your event bookings and view your favorite events efficiently.</>)}
+                 {userDetails.isTourist &&  (<>Welcome to your dashboard! Browse through rooms, Track your room bookings and view your favorite rooms efficiently.</>)}
               </p>
 
               <div className="mt-4 md:mt-8">
@@ -152,7 +152,7 @@ const Dashboard = () => {
         <div className="bg-white p-6 rounded-lg shadow-md">
           <div>
             <h3 className="text-xl font-bold mb-4">
-              {userDetails?.isCreator ? 'Projects Summary' : 'Event Booking Summary'}
+              {userDetails?.isCreator ? 'Projects Summary' : 'Room Booking Summary'}
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
               {userDetails?.isCreator ? (
@@ -175,7 +175,7 @@ const Dashboard = () => {
                     <div class="h-38 flex flex-col justify-center items-center bg-[url('https://preline.co/assets/svg/examples/abstract-bg-1.svg')] bg-no-repeat bg-cover bg-center rounded-t-xl">
                         <img src={donation.projectImage} alt="project image" className='w-full h-38 rounded-md' />
                     </div>
-                    <h4 className="text-lg font-semibold mb-2">Event: {donation.projectTitle}</h4>
+                    <h4 className="text-lg font-semibold mb-2">{donation.projectTitle.length > 20 ? donation.projectTitle.slice(0,20) + '...' : donation.projectTitle}</h4>
                     <p className="text-gray-800 font-semibold">Amount: GHS{userDetails?.currency}{donation.amount.toFixed(2)}</p>
                     <p className="text-gray-600">Booked on: {new Date(donation.timestamp).toLocaleDateString()}</p>
                   </div>

@@ -98,20 +98,20 @@ const Sidebar = () => {
                 <span class="mx-2 text-sm font-medium">Profile</span>
             </div>
         */}
-            <div onClick={() => router.push(`/my-admin/${id}/events/create`)} class="cursor-pointer flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700">
+            <div onClick={() => router.push(`/my-admin/${id}/rooms/create`)} class="cursor-pointer flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 12h16.5m-16.5 3.75h16.5M3.75 19.5h16.5M5.625 4.5h12.75a1.875 1.875 0 010 3.75H5.625a1.875 1.875 0 010-3.75z" />
                 </svg>
 
-                <span class="mx-2 text-sm font-medium">Create Event</span>
+                <span class="mx-2 text-sm font-medium">Create A Room</span>
             </div>
 
-            <div onClick={() => router.push(`/my-admin/${id}/events/manage`)} class="cursor-pointer flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700">
+            <div onClick={() => router.push(`/my-admin/${id}/rooms/manage`)} class="cursor-pointer flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 12h16.5m-16.5 3.75h16.5M3.75 19.5h16.5M5.625 4.5h12.75a1.875 1.875 0 010 3.75H5.625a1.875 1.875 0 010-3.75z" />
                 </svg>
 
-                <span class="mx-2 text-sm font-medium">Event Management</span>
+                <span class="mx-2 text-sm font-medium">Room Management</span>
             </div>
 {/*
             <div onClick={() => router.push(`/my-admim/${id}/projects/donations`)} class="cursor-pointer flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700">
@@ -144,7 +144,7 @@ const Sidebar = () => {
             <div class="p-3 bg-gray-100 rounded-lg dark:bg-gray-800">
                 <h2 class="text-sm font-medium text-gray-800 dark:text-white">Welcome Back Admin!</h2>
 
-                <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">Create local events, manage them and view their available tourists. You can manage al user accounts as well</p>
+                <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">Create rooms, manage them and view their available tenants. You can manage al user accounts as well</p>
 
                 <img class="object-cover w-full h-32 mt-2 rounded-lg" src="https://i0.wp.com/www.kentecloth.net/wp-content/uploads/2010/03/2010-03-25_001035.jpg?fit=530%2C425&ssl=1" alt=""/>
             </div>
@@ -173,11 +173,11 @@ const Sidebar = () => {
     <span className="btm-nav-label text-sm">Home</span>
   </button>
   
-  <button onClick={() => router.push(`/my-admin/${id}/events`)}>
+  <button onClick={() => router.push(`/my-admin/${id}/rooms`)}>
   <div className='flex items-center justify-center'>
     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
   </div> 
-  <span className="btm-nav-label text-sm">Manage Events</span>
+  <span className="btm-nav-label text-sm">Manage Rooms</span>
   </button>
 
   <button className="active" onClick={() => router.push(`/my-admin/${id}/users`)}>

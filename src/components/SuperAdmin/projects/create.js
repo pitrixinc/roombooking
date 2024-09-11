@@ -14,7 +14,8 @@ const Create = () => {
     const [userDetails, setUserDetails] = useState(null);
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
-    const [category, setCategory] = useState('');
+  //  const [category, setCategory] = useState('');
+    const [tenantsNumber, setTenantsNumber] = useState(0);
     const [goal, setGoal] = useState('');
     const [eventPickupLocation, setEventPickupLocation] = useState('');
     const [startDate, setStartDate] = useState('');
@@ -124,10 +125,11 @@ const Create = () => {
         setLoading(true);
         
         try {
-          const docRef = await addDoc(collection(db, "events"), {
+          const docRef = await addDoc(collection(db, "rooms"), {
             title: title,
             description: description,
-            category: category,
+           // category: category,
+            tenantsNumber,
             goal: goal,
             eventPickupLocation: eventPickupLocation,
             startDate: startDate,
@@ -149,28 +151,28 @@ const Create = () => {
           };
       
           if (selectedFile) {
-            const imageRef = ref(storage, `events/${docRef.id}/images/${Date.now()}_${selectedFile.name}`);
+            const imageRef = ref(storage, `rooms/${docRef.id}/images/${Date.now()}_${selectedFile.name}`);
             await uploadString(imageRef, selectedFile, 'data_url');
             const imageUrl = await getDownloadURL(imageRef);
             projectData.image = imageUrl;
           }
       
           if (selectedVideo) {
-            const videoRef = ref(storage, `events/${docRef.id}/videos/${Date.now()}_${selectedVideo.name}`);
+            const videoRef = ref(storage, `rooms/${docRef.id}/videos/${Date.now()}_${selectedVideo.name}`);
             await uploadString(videoRef, selectedVideo, 'data_url');
             const videoUrl = await getDownloadURL(videoRef);
             projectData.video = videoUrl;
           }
       
-          const projectDocRef = doc(db, 'events', docRef.id);
+          const projectDocRef = doc(db, 'rooms', docRef.id);
           await updateDoc(projectDocRef, projectData);
         
           setLoading(false);
-          toast.success("Event added successfully!");
-          router.push(`/my-admin/${id}/events`);
+          toast.success("Room added successfully!");
+          router.push(`/my-admin/${id}/rooms`);
         } catch (err) {
           setLoading(false);
-          toast.error("Event not added! Error: " + err.message);
+          toast.error("Room not added! Error: " + err.message);
         }
       };
       
@@ -215,10 +217,10 @@ const Create = () => {
 
           <div class="space-y-2">
             <label for="af-submit-app-project-name" class="inline-block text-sm font-medium text-gray-800 mt-2.5 dark:text-neutral-200">
-              Event Title
+              Room Title
             </label>
 
-            <input id="af-submit-app-project-name" value={title} onChange={(e) => setTitle(e.target.value)} required type="text" class="py-2 px-3 pe-11 block w-full border-gray-200 shadow-sm rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" placeholder="Enter event title"/>
+            <input id="af-submit-app-project-name" value={title} onChange={(e) => setTitle(e.target.value)} required type="text" class="py-2 px-3 pe-11 block w-full border-gray-200 shadow-sm rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" placeholder="Enter Room title"/>
           </div>
 {/*
           <div class="space-y-2">
@@ -326,7 +328,7 @@ const Create = () => {
     )}
     </>
 )}
-
+{/*
           <div class="space-y-2">
             <label for="af-submit-app-category" class="inline-block text-sm font-medium text-gray-800 mt-2.5 dark:text-neutral-200">
               Category
@@ -339,18 +341,18 @@ const Create = () => {
               <option value="Local Event">Local Event</option>
             </select>
           </div>
-
+*/}
           <div class="space-y-2">
             <label for="af-submit-app-description" class="inline-block text-sm font-medium text-gray-800 mt-2.5 dark:text-neutral-200">
               Description
             </label>
 
-            <textarea id="af-submit-app-description" value={description} onChange={(e) => setDescription(e.target.value)} required class="py-2 px-3 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" rows="6" placeholder="A detailed summary will better explain your products to the audiences. Our users will see this in your dedicated product page."></textarea>
+            <textarea id="af-submit-app-description" value={description} onChange={(e) => setDescription(e.target.value)} required class="py-2 px-3 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" rows="6" placeholder="A detailed summary will better explain your room to the tenants. Our users will see this in your dedicated rooms page."></textarea>
           </div>
 
           <div class="space-y-2">
             <label for="af-submit-app-project-name" class="inline-block text-sm font-medium text-gray-800 mt-2.5 dark:text-neutral-200">
-              Event Price
+              Room Price
             </label>
 
             <input id="af-submit-app-project-name"  value={goal} onChange={(e) => setGoal(e.target.value)} required type="number" 
@@ -360,10 +362,10 @@ const Create = () => {
 
           <div class="space-y-2">
             <label for="af-submit-app-project-name" class="inline-block text-sm font-medium text-gray-800 mt-2.5 dark:text-neutral-200">
-              Event Bus/Flight Pickup Point
+              Number Of tenant Required
             </label>
 
-            <input id="af-submit-app-project-name"  value={eventPickupLocation} onChange={(e) => setEventPickupLocation(e.target.value)} required type="text" 
+            <input id="af-submit-app-project-name"  value={tenantsNumber} onChange={(e) => setTenantsNumber(e.target.value)} required type="number" 
             class="py-2 px-3 pe-11 block w-full border-gray-200 shadow-sm rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
              placeholder="The location to pick up tourist for the event."/>
           </div>
@@ -373,7 +375,7 @@ const Create = () => {
               Start Date
             </label>
 
-            <input id="af-submit-app-project-name" value={startDate} onChange={(e) => setStartDate(e.target.value)} required type="date" class="py-2 px-3 pe-11 block w-full border-gray-200 shadow-sm rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" placeholder="The end date for the event."/>
+            <input id="af-submit-app-project-name" value={startDate} onChange={(e) => setStartDate(e.target.value)} required type="date" class="py-2 px-3 pe-11 block w-full border-gray-200 shadow-sm rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" placeholder="The end date for the room."/>
           </div>
 
           <div class="space-y-2">
@@ -381,14 +383,14 @@ const Create = () => {
               Deadline
             </label>
 
-            <input id="af-submit-app-project-name" value={deadline} onChange={(e) => setDeadline(e.target.value)} required type="date" class="py-2 px-3 pe-11 block w-full border-gray-200 shadow-sm rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" placeholder="The end date for the event."/>
+            <input id="af-submit-app-project-name" value={deadline} onChange={(e) => setDeadline(e.target.value)} required type="date" class="py-2 px-3 pe-11 block w-full border-gray-200 shadow-sm rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" placeholder="The end date for the room."/>
           </div>
           
           <div class="space-y-2">
             <label for="af-submit-app-project-name" class="inline-block text-sm font-medium text-gray-800 mt-2.5 dark:text-neutral-200">
             FAQs
             </label>
-            <textarea id="af-submit-app-description" value={faqs} onChange={(e) => setFaqs(e.target.value)} required class="py-2 px-3 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" rows="6" placeholder="Frequently Asked Questions to address common queries from potential backers."></textarea>
+            <textarea id="af-submit-app-description" value={faqs} onChange={(e) => setFaqs(e.target.value)} required class="py-2 px-3 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" rows="6" placeholder="Frequently Asked Questions to address common queries from potential tenants."></textarea>
           </div>
 
           <div class="space-y-2">
@@ -396,7 +398,7 @@ const Create = () => {
               Location
             </label>
 
-            <input id="af-submit-app-project-name" value={location} onChange={(e) => setLocation(e.target.value)} required type="text" class="py-2 px-3 pe-11 block w-full border-gray-200 shadow-sm rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" placeholder="The geographical location where the project is based or where the funds will be utilized."/>
+            <input id="af-submit-app-project-name" value={location} onChange={(e) => setLocation(e.target.value)} required type="text" class="py-2 px-3 pe-11 block w-full border-gray-200 shadow-sm rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" placeholder="The geographical location where the room is based."/>
           </div>
 
           <div class="space-y-2">
@@ -404,7 +406,7 @@ const Create = () => {
               Social Media Links
             </label>
 
-            <textarea id="af-submit-app-project-name" value={socialLinks} onChange={(e) => setSocialLinks(e.target.value)} required type="text" class="py-2 px-3 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" rows="6" placeholder="Links to the project's social media profiles to engage with the community and provide updates."></textarea>
+            <textarea id="af-submit-app-project-name" value={socialLinks} onChange={(e) => setSocialLinks(e.target.value)} required type="text" class="py-2 px-3 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" rows="6" placeholder="Links to your social media profiles to engage with the community and provide updates."></textarea>
           </div>
 {/*
           <div class="space-y-2">
@@ -426,7 +428,7 @@ const Create = () => {
         ) : (
         <div class="mt-5 flex justify-center gap-x-2">
           <button type="submit" class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
-            Submit your project
+            Submit your Room
           </button>
         </div>
         )}

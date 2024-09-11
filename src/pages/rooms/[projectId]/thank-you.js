@@ -5,6 +5,7 @@ import { db } from '../../../firebase.config';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import Layout from '../../../components/layout';
 import Head from 'next/head';
+import moment from 'moment';
 
 export default function ThankYouPage() {
   const router = useRouter();
@@ -18,7 +19,7 @@ export default function ThankYouPage() {
       onAuthStateChanged(auth, async (user) => {
         if (user) {
           const bookingsQuery = query(
-            collection(db, 'eventbooking'),
+            collection(db, 'roombooking'),
             where('projectId', '==', projectId),
             where('userId', '==', user.uid)
           );
@@ -69,7 +70,8 @@ export default function ThankYouPage() {
             Print Receipt
           </button>
           </div>
-         
+          <p className="text-md text-green-700 mb-8">Congratulations! Your booking for the <span className="font-semibold">{bookingDetails.projectTitle}</span> on <span className="font-semibold">{new Date(bookingDetails.timestamp).toLocaleString()} </span> has been successfully confirmed. We are thrilled to have you join us for this room. Please find your order details below. If you have any questions or need further assistance, do not hesitate to contact us. Thank you for choosing us, and we look forward to seeing you soon!</p>
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             <div className="p-4 border rounded-lg bg-gray-50 shadow-sm">
               <h2 className="font-semibold text-md md:text-xl mb-4">Order Info</h2>
@@ -80,15 +82,18 @@ export default function ThankYouPage() {
               <p className="text-gray-700 mb-1"><span className="font-medium">Order ID:</span> {bookingDetails.bookingId}</p>
             </div>
             <div className="p-4 border rounded-lg bg-gray-50 shadow-sm">
-              <h2 className="font-semibold text-md md:text-xl mb-4">Customer</h2>
+              <h2 className="font-semibold text-md md:text-xl mb-4">Tenant Info</h2>
               <p className="text-gray-700 mb-1"><span className="font-medium">Name:</span> {bookingDetails.userName}</p>
               <p className="text-gray-700 mb-1"><span className="font-medium">Email:</span> {bookingDetails.userEmail}</p>
               <p className="text-gray-700 mb-1"><span className="font-medium">Phone number:</span> {bookingDetails.userPhoneNumber}</p>
+              <img src={bookingDetails.userImage} alt='tenant image' className='w-10 h-10 rounded-full' />
             </div>
             <div className="p-4 border rounded-lg bg-gray-50 shadow-sm">
-              <h2 className="font-semibold text-md md:text-xl mb-4">Event Address</h2>
+              <h2 className="font-semibold text-md md:text-xl mb-4">Room Info</h2>
+              <p className="text-gray-700 mb-1"><span className="font-medium">Name:</span> {bookingDetails.projectTitle.length > 20 ? bookingDetails.projectTitle.slice(0,20) + '...' :  bookingDetails.projectTitle}</p>
               <p className="text-gray-700 mb-1"><span className="font-medium">Address:</span> {bookingDetails.eventLocation}</p>
-              <p className="text-gray-700 mt-2 mb-1"><span className="font-medium">Pickup Point:</span> {bookingDetails.eventPickupLocation}</p>
+              <p className="text-gray-700 mb-1"><span className="font-medium">Start Date:</span>{moment(bookingDetails.startDate).format('D MMMM, YYYY')}</p>
+              <p className="text-gray-700 mb-1"><span className="font-medium">Address:</span>{moment(bookingDetails.endDate).format('D MMMM, YYYY')}</p>
             </div>
           </div>
 
@@ -98,29 +103,20 @@ export default function ThankYouPage() {
               <div>
                 <h3 className="font-semibold text-md md:text-xl">{bookingDetails.projectTitle}</h3>
                 <p className="text-gray-600">{bookingDetails.selectedPackage} Package</p>
-                <p className="font-bold text-sm mt-2">GHS{bookingDetails.packageAmount}</p>
+                <p className="font-bold text-sm mt-2">GHS{bookingDetails.amount}</p>
               </div>
             </div>
-            {bookingDetails.hotelFee && (
-            <div className="flex items-center p-4 border rounded-lg bg-gray-50 shadow-sm">
-              <img src={bookingDetails?.hotelImage && bookingDetails?.hotelImage} alt="hotel" className="w-20 h-20 object-cover mr-6 rounded-md" />
-              <div>
-               {bookingDetails?.hotelName && ( <h3 className="font-semibold text-md md:text-xl">{bookingDetails.hotelName}</h3> )}
-                <p className="text-gray-600">{bookingDetails.eventLocation} - GHS{bookingDetails.userEventSpendingDays * bookingDetails.hotelFee}</p> 
-               {bookingDetails?.hotelFee && ( <p className="font-semibold text-sm mt-2">GHS{bookingDetails.hotelFee} per day - You booked for {bookingDetails.userEventSpendingDays} days</p> )}
-              </div>
-            </div>
-            )}
+            
           </div>
 
           <div className="p-6 border rounded-lg bg-gray-50 shadow-sm">
             <div className="flex justify-between mb-4 text-sm md:text-lg">
-              <span>{bookingDetails.selectedPackage} Package Fee:</span>
-              <span>GHS{bookingDetails.packageAmount}.00</span>
+              <span>Room Cost:</span>
+              <span>GHS{bookingDetails.amount}.00</span>
             </div>
             <div className="flex justify-between mb-4 text-sm md:text-lg">
-              <span>Hotel Reservation</span>
-              <span>GHS{bookingDetails.userEventSpendingDays * bookingDetails.hotelFee}.00</span>
+              <span>{bookingDetails.selectedPackage} Package Fee:</span>
+              <span>GHS{bookingDetails.packageAmount}.00</span>
             </div>
             <div className="flex justify-between mb-4 text-sm md:text-lg">
               <span>Taxes</span>

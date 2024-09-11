@@ -127,6 +127,7 @@ const AccountSignup = () => {
         toast.warning('You are logged in as admin already')
         router.push(`/dashboard/${userData.uid}/dashboard`);
       } else if (userData.isTourist) {
+        toast.warning('You are logged in already')
         router.push(`/account/${user.uid}/dashboard`);
       } else {
         router.push('/');

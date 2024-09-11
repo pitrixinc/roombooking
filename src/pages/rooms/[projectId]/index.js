@@ -20,7 +20,7 @@ import GoogleMapModal from '../../../components/events/GoogleMapModal'; // Impor
 
 export default function Projectid() {
   const router = useRouter();
-  const { projectId, startDate, endDate } = router.query; // Extract projectId from URL parameters
+  const { projectId, startDate, endDate, semester } = router.query; // Extract projectId from URL parameters
   const [project, setProject] = useState(null);
   const [currentUser, setCurrentUser] = useState(null);
   const [amount, setAmount] = useState(0);
@@ -38,7 +38,7 @@ export default function Projectid() {
   const days = moment(endDate).diff(moment(startDate), 'days') + 1;
   console.log("days difference", days)
   //    const totalHotelFee = days * hotelFee;
-
+  console.log('user has booked for ', semester, 'semester')
 
   useEffect(() => {
     const auth = getAuth();
@@ -66,7 +66,7 @@ export default function Projectid() {
   useEffect(() => {
     const fetchProjectDetails = async () => {
       try {
-        const projectDoc = await getDoc(doc(db, 'events', projectId));
+        const projectDoc = await getDoc(doc(db, 'rooms', projectId));
         if (projectDoc.exists()) {
           setProject({ id: projectDoc.id, ...projectDoc.data() });
         } else {
@@ -79,7 +79,7 @@ export default function Projectid() {
 
     const fetchBookings = async () => {
       try {
-        const bookingsQuery = query(collection(db, 'eventbooking'), where('projectId', '==', projectId));
+        const bookingsQuery = query(collection(db, 'roombooking'), where('projectId', '==', projectId));
         const bookingsSnapshot = await getDocs(bookingsQuery);
 
         let total = 0;
@@ -110,7 +110,7 @@ export default function Projectid() {
 
   
   const handlePackageSelection = (selectedPackage) => {
-    let newAmount = project.goal * days; // Start with project.goal as the base amount
+    let newAmount = project.goal * semester; // Start with project.goal as the base amount
 
     switch (selectedPackage) {
       case 'Silver':
@@ -123,7 +123,7 @@ export default function Projectid() {
         break;
       case 'Bronze':
       default:
-        newAmount += 100;
+        newAmount;
         break;
     }
 
@@ -138,12 +138,17 @@ const handlePayment = async (e) => {
 
   if (!userData) {
     router.push('/signin');
-    toast.error('Please sign in before you donate!');
+    toast.warning('Please sign in before you book room!');
     return;
   }
 
+  if (!semester) {
+    router.push('/rooms')
+    toat.warning('Please select your semester')
+  }
+
   if (!startDate || !endDate) {
-    router.push('/events')
+    router.push('/rooms')
     toast.error('Check in date and check out date is required')
     return;
   } 
@@ -203,12 +208,12 @@ const handleBooking = async () => {
       break;
     case 'Bronze':
     default:
-      packageAmount = 100;
+      packageAmount = 0;
       break;
   }
 
   try {
-    const newBookingRef = doc(collection(db, 'eventbooking'));
+    const newBookingRef = doc(collection(db, 'roombooking'));
     const bookingId = newBookingRef.id;
 
     await setDoc(newBookingRef, {
@@ -229,16 +234,19 @@ const handleBooking = async () => {
       userImage: currentUser.photoURL,
       userEventSpendingDays: days,
       amount: bookingAmountNumber,
-      hotelImage: selectedPackage !== 'Bronze' ? selectedHotel.photo : '', // Handle hotel info only if not Bronze
-      hotelName: selectedPackage !== 'Bronze' ? selectedHotel.name : '',
-      hotelFee: selectedPackage !== 'Bronze' ? selectedHotel.fee : 0,
+      semester: semester,
+      startDate: startDate,
+      endDate: endDate,
+    //  hotelImage: selectedPackage !== 'Bronze' ? selectedHotel.photo : '', // Handle hotel info only if not Bronze
+    //  hotelName: selectedPackage !== 'Bronze' ? selectedHotel.name : '',
+    //  hotelFee: selectedPackage !== 'Bronze' ? selectedHotel.fee : 0,
       selectedPackage,
       packageAmount,
       timestamp: new Date().toISOString(),
     });
 
     toast.success(`Thank you for booking $${bookingAmountNumber}!`);
-    router.push(`/events/${projectId}/thank-you`);
+    router.push(`/rooms/${projectId}/thank-you`);
     setErrorMessage('');
     setAmount(0);
     setLoading(false);
@@ -252,7 +260,7 @@ const handleBooking = async () => {
 
 
   const handleHotelSelection = (hotelFee, hotelDetails) => {
-    const totalHotelFee = days * hotelFee;
+    const totalHotelFee = semester * hotelFee;
     const newAmount = amount + totalHotelFee;
     setAmount(newAmount);
     setShowGoogleMapModal(false);
@@ -352,7 +360,7 @@ const handleBooking = async () => {
               )}</div>
               
               <button className="flex items-center text-rose-500 justify-center w-full p-2 font-semibold bg-white border border-rose-500 hover:bg-green-100 hover:border-green-600">
-              <span className="p-1"><RiTeamLine /></span> <span>{bookingCount} Tourists</span>
+              <span className="p-1"><RiTeamLine /></span> <span>{bookingCount} Tenants</span>
               </button>
             </div>
           </div>
@@ -368,19 +376,20 @@ const handleBooking = async () => {
               </div>
               
               {!userHasBooked ? (<>
-                <p className="mb-4 mt-3 text-gray-600">You will be spending <span className="font-semibold">{days} days</span> at {project.location} </p>
+                <p className="mb-4 mt-3 text-gray-600">You will be spending <span className="font-semibold">{semester} {semester === 1 ? 'Semester' : 'Semesters'}</span> in your room at {project.location} </p>
 
             <div className="mb-4 overflow-x-auto w-full">
               <label className="block text-gray-700 font-bold mb-2" htmlFor="package">
                 Select a Package:
               </label>
               <div className="flex space-x-4">
-               {/* <button
-                  className={`py-2 px-4 rounded ${selectedPackage === 'Bronze' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'}`}
+                <button
+                  className={`py-2 px-4 rounded ${selectedPackage === 'Bronze' ? 'bg-rose-500 text-white font-semibold' : 'bg-gray-100 text-rose-700 font-semibold border border-dashed border-rose-500'}`}
                   onClick={() => handlePackageSelection('Bronze')}
                 >
-                  Bronze (GHS 100)
-              </button>  */}
+                  Choose the Bronze Package for affordable, comfortable room booking now!
+              </button>  
+              {/*
               <button 
                   className={`py-2 px-4 rounded ${selectedPackage === 'Silver' ? 'bg-rose-500 text-white font-semibold' : 'bg-gray-100 text-rose-700 font-semibold border border-dashed border-rose-500'}`}
                   onClick={() => handlePackageSelection('Silver')}
@@ -393,22 +402,37 @@ const handleBooking = async () => {
                 >
                   Gold (GHS 170 + Hotel Fee)
                 </button>
+              */}
               </div>
              
               <div className=" p-6 rounded-lg shadow-md">
               <div className="bg-gray-100 flex justify-between border-b pb-2 mb-6 mt-3 text-sm">
                 <i className="font-semibold text-gray-700">
-                  Event Cost for {days} Days:
+                  Start Date:
                 </i>
-                <i className="font-bold text-gray-900">GHS{project.goal * days}</i>
+                <i className="font-bold text-gray-900">{moment(startDate).format('D MMMM, YYYY')}</i>
+              </div>
+
+              <div className="bg-gray-100 flex justify-between border-b pb-2 mb-6 mt-3 text-sm">
+                <i className="font-semibold text-gray-700">
+                  End Date:
+                </i>
+                <i className="font-bold text-gray-900">{moment(endDate).format('D MMMM, YYYY')}</i>
+              </div>
+
+              <div className="bg-gray-100 flex justify-between border-b pb-2 mb-6 mt-3 text-sm">
+                <i className="font-semibold text-gray-700">
+                  Room booking Costs for {semester} {semester === 1 ? 'Semester' : 'Semesters'}:
+                </i>
+                <i className="font-bold text-gray-900">GHS{project.goal * semester}</i>
               </div>
 
               <div className="flex justify-between border-b pb-2 mb-6 text-sm">
                 <i className="font-semibold text-gray-700">
-                  Event Package Cost:
+                  Room Package Cost:
                 </i>
                 <i className="font-bold text-gray-900">
-                  {/* selectedPackage === 'Gold' ? 'GHS170' : */ selectedPackage === 'Silver' ? 'GHS150' : selectedPackage === 'Bronze' ? 'GHS100' : 'GHS0'}
+                  {/* selectedPackage === 'Gold' ? 'GHS170' : */ selectedPackage === 'Silver' ? 'GHS150' : selectedPackage === 'Bronze' ? 'GHS0.00' : 'GHS0'}
                 </i>
               </div>
 

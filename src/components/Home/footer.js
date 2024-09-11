@@ -52,7 +52,7 @@ export function Footer() {
         >
           &copy; {CURRENT_YEAR} {" "}
           <a href="#" target="_blank">
-            Intellitrip
+            Hanford University
           </a>{" "}
           {" "}
           <a href="#" target="_blank">

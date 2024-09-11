@@ -27,7 +27,7 @@ const Manage = () => {
       const fetchProjects = async () => {
         try {
           // Fetch all projects
-          const querySnapshot = await getDocs(collection(db, 'events'));
+          const querySnapshot = await getDocs(collection(db, 'rooms'));
           const allProjects = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
   
           // Filter projects by the current user
@@ -38,7 +38,7 @@ const Manage = () => {
   
           setProjects(allProjects);
         } catch (error) {
-          console.error('Error fetching projects:', error);
+          console.error('Error fetching rooms:', error);
         }
       };
   
@@ -128,7 +128,7 @@ const Manage = () => {
       if (!projectToDelete) return;
   
       try {
-        await deleteDoc(doc(db, 'events', projectToDelete.id));
+        await deleteDoc(doc(db, 'rooms', projectToDelete.id));
         setProjects(projects.filter(project => project.id !== projectToDelete.id));
         toast.success("You have successfully deleted the project.")
         closeDeleteModal();
@@ -141,7 +141,7 @@ const Manage = () => {
 
     const calculateDonationStats = async (projectId) => {
       try {
-          const donationSnapshot = await getDocs(query(collection(db, 'eventbooking'), where('projectId', '==', projectId)));
+          const donationSnapshot = await getDocs(query(collection(db, 'roombooking'), where('projectId', '==', projectId)));
           const totalAmountDonated = donationSnapshot.docs.reduce((total, doc) => total + doc.data().amount, 0);
           const donatorImages = donationSnapshot.docs.map(doc => doc.data().userImage);
           return { totalAmountDonated, donatorImages };
@@ -169,7 +169,7 @@ const Manage = () => {
 
   const handleDonatorClick = async (projectId) => {
     try {
-        const donationSnapshot = await getDocs(query(collection(db, 'eventbooking'), where('projectId', '==', projectId)));
+        const donationSnapshot = await getDocs(query(collection(db, 'roombooking'), where('projectId', '==', projectId)));
         const donators = donationSnapshot.docs.map(doc => doc.data());
         setCurrentDonators(donators);
         setIsDonatorModalOpen(true);
@@ -185,12 +185,12 @@ const Manage = () => {
     <div class="sm:flex sm:items-center sm:justify-between">
         <div>
             <div class="flex items-center gap-x-3">
-                <h2 class="text-lg font-medium text-gray-800 dark:text-white">Your Events</h2>
+                <h2 class="text-lg font-medium text-gray-800 dark:text-white">Your Rooms</h2>
 
-                <span class="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400">{projects.length} Events</span>
+                <span class="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400">{projects.length} Rooms</span>
             </div>
 
-            <p class="mt-1 text-sm text-gray-500 dark:text-gray-300">Browse through all the events created</p>
+            <p class="mt-1 text-sm text-gray-500 dark:text-gray-300">Browse through all the rooms created</p>
         </div>
 
         <div class="flex items-center mt-4 gap-x-3">
@@ -222,7 +222,7 @@ const Manage = () => {
     <div class="mt-6 md:flex md:items-center md:justify-between overflow-x-auto">
         {/* Tabs */}
       <div className="inline-flex overflow-hidden bg-white border divide-x rounded-lg dark:bg-gray-900 rtl:flex-row-reverse dark:border-gray-700 dark:divide-gray-700 mb-4">
-        {['All', 'Festivals', 'Tourist Sites', 'Local Events'].map(tab => (
+        {['All' /*, 'Festivals', 'Tourist Sites', 'Local Events' */].map(tab => (
           <button
             key={tab}
             onClick={() => handleTabClick(tab)}
@@ -290,7 +290,7 @@ const Manage = () => {
                                     About
                                 </th>
 
-                                <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">Tourists</th>
+                                <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">Tenants</th>
 
                                 <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">Date</th>
 
@@ -323,7 +323,7 @@ const Manage = () => {
                                 </td>
                                 <td class="px-4 py-4 text-sm whitespace-nowrap">
                                     <div>
-                                        <h4 class="text-gray-700 dark:text-gray-200">{project.category.slice(0,8)}...</h4>
+                                        <h4 class="text-gray-700 dark:text-gray-200">{project.location.slice(0,8)}...</h4>
                                         <p class="text-gray-500 dark:text-gray-400">{project.description.slice(0,8)}...</p>
                                     </div>
                                 </td>

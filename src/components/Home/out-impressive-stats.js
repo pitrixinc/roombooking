@@ -35,7 +35,7 @@ const STATS = [
 
 export function OutImpressiveStats() {
   return (
-    <section className="px-8 pt-60 mt-[230px] md:mt-[100px] lg:md-[100px]">
+    <section className="px-8 pt-60 mt-[5px] md:mt-[5px] lg:md-[5px]">
       <div className="container mx-auto text-center lg:text-left">
         <div className="grid place-items-center text-center">
           <Typography variant="h2" color="blue-gray" className="mb-2 text-2xl md:text-4xl">
