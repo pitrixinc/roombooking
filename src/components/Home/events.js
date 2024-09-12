@@ -42,13 +42,13 @@ export function Events({ filters, sortOption }) {
 
   useEffect(() => {
     const fetchProjects = async () => {
-      const querySnapshot = await getDocs(collection(db, 'events'));
+      const querySnapshot = await getDocs(collection(db, 'rooms'));
       const projectsList = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 
       
       // Filter projects based on status and category
       const approvedProjects = projectsList.filter(project => 
-        project.status === "Approved" && project.category === "Festival"
+        project.status === "Approved" // && project.category === "Festival"
       );
 
 
@@ -104,19 +104,19 @@ export function Events({ filters, sortOption }) {
     <section className="py-20 px-8">
       <div className="container mx-auto mb-20 text-center">
         <Typography variant="h2" color="blue-gray" className="mb-4">
-          Upcoming Events
+          Popular Rooms
         </Typography>
         <Typography
           variant="lead"
           className="mx-auto w-full px-4 font-normal !text-gray-500 lg:w-6/12"
         >
-          Explore approved festivals: vibrant celebrations, exciting performances, 
-          and unique cultural experiences in one place.
+          Discover our most popular rooms, 
+          favored for their exceptional comfort, unique features, and outstanding value. Find your favorite today!
         </Typography>
       </div>
       <div className="container mx-auto grid grid-cols-1 gap-x-10 gap-y-20 md:grid-cols-2 xl:grid-cols-4">
       {currentProjects.map(project => (
-          <Card key={project.id} color="transparent" shadow={false}  onClick={() => router.push(`/events/${project.id}?startDate=${project?.startDate}&endDate=${project?.deadline}`)}>
+          <Card key={project.id} color="transparent" shadow={false}  onClick={() => router.push(`/rooms/${project.id}?startDate=${project?.startDate}&endDate=${project?.deadline}`)}>
           <CardHeader floated={false} className="mx-0 mt-0 mb-6 h-48">
             <Image
               width={768}
@@ -139,7 +139,7 @@ export function Events({ filters, sortOption }) {
               {project?.description.slice(0,100)}...
             </Typography>
             <Button color="gray" size="sm">
-               View Festival
+               View Room
             </Button>
           </CardBody>
         </Card>

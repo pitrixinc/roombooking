@@ -73,7 +73,7 @@ const Navbar = () => {
           <div id="navbar-collapse" className={`hs-collapse ${isMenuOpen ? 'block' : 'hidden'} overflow-hidden transition-all duration-300 basis-full grow md:block`}>
             <div className="flex flex-col md:flex-row md:items-center md:justify-end py-2 md:py-0 md:ps-7">
               <Link className="py-3 ps-px sm:px-3 md:py-4 text-sm text-black hover:text-neutral-300 focus:outline-none focus:text-neutral-300" href="/" aria-current="page">Home</Link>
-              <Link className="py-3 ps-px sm:px-3 md:py-4 text-sm text-black hover:text-neutral-300 focus:outline-none focus:text-neutral-300" href="/rooms">Rooms</Link>
+            {/*  <Link className="py-3 ps-px sm:px-3 md:py-4 text-sm text-black hover:text-neutral-300 focus:outline-none focus:text-neutral-300" href="/rooms">Rooms</Link> */}
               <Link className="py-3 ps-px sm:px-3 md:py-4 text-sm text-black hover:text-neutral-300 focus:outline-none focus:text-neutral-300" href="/about-us">About Us</Link>
               <Link className="py-3 ps-px sm:px-3 md:py-4 text-sm text-black hover:text-neutral-300 focus:outline-none focus:text-neutral-300" href="/privacy">Privacy</Link>
 

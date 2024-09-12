@@ -253,8 +253,8 @@ const fetchEvents = async () => {
       <Search
         location={location}
         setLocation={(loc) => router.push({ query: { ...router.query, location: loc } })}
-      //  semester={semester || ''}
-        // setSemester={(sem) => router.push({ query: { ...router.query, semester: sem } })}
+        semester={semester || ''}
+        setSemester={(sem) => router.push({ query: { ...router.query, semester: sem } })}
         startDate={startDate ? new Date(startDate) : null}
         setStartDate={(date) => router.push({ query: { ...router.query, startDate: date.toISOString() } })}
         endDate={endDate ? new Date(endDate) : null}

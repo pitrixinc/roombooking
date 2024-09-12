@@ -25,7 +25,7 @@ const SitePrivacy = () => {
             <div>
               <h2 className="text-3xl font-bold mb-6">1. Introduction</h2>
               <p className="text-lg leading-relaxed">
-                Welcome to the Ghana Local Events Booking website. We are committed to protecting your privacy and ensuring that your personal data is secure. This policy outlines how we collect, use, and safeguard your information.
+                Welcome to the rooms Booking website. We are committed to protecting your privacy and ensuring that your personal data is secure. This policy outlines how we collect, use, and safeguard your information.
               </p>
             </div>
             <div className="bg-gray-100 dark:bg-gray-800 p-6 rounded-lg shadow-lg">
@@ -53,7 +53,7 @@ const SitePrivacy = () => {
                 Collecting data allows us to:
               </p>
               <ul className="list-disc list-inside space-y-2 mt-2">
-                <li>Process your event bookings.</li>
+                <li>Process your room bookings.</li>
                 <li>Communicate effectively with you.</li>
                 <li>Improve our services based on your preferences.</li>
               </ul>
@@ -150,7 +150,7 @@ const SitePrivacy = () => {
 
       <footer className="text-center mt-12">
         <p className="text-sm text-gray-500 dark:text-gray-400">
-          © {new Date().getFullYear()} Intellitrip. All rights reserved.
+          © {new Date().getFullYear()} Hansford Unversity. All rights reserved.
         </p>
       </footer>
     </div>

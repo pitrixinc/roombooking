@@ -42,8 +42,8 @@ const Navbar = () => {
 
   return (
     <>
-      <header className="sticky top-0 md:top-4 inset-x-0 flex flex-wrap md:justify-start md:flex-nowrap z-50 w-full">
-        <nav className="relative shadow-md max-w-[66rem] w-full bg-white bg-white/90 md:rounded-[28px] py-3 ps-5 pe-2 md:flex md:items-center md:justify-between md:py-0 md:mx-2 lg:mx-auto" aria-label="Global">
+      <header className="sticky top-0  inset-x-0 flex flex-wrap md:justify-start md:flex-nowrap z-50 w-full">
+        <nav className="relative shadow-md  w-full bg-white bg-white/90 py-3 ps-5 pe-2 md:flex md:items-center md:justify-between md:py-0 md:mx-2 lg:mx-auto" aria-label="Global">
           <div className="flex items-center justify-between">
             <Link className="flex-none rounded-md inline-block font-semibold focus:outline-none focus:opacity-80" href="/" aria-label="Preline">
               <img src="/image/logo1.png" className="w-28 h-6 md:h-auto" alt="logo" />
@@ -73,11 +73,12 @@ const Navbar = () => {
           <div id="navbar-collapse" className={`hs-collapse ${isMenuOpen ? 'block' : 'hidden'} overflow-hidden transition-all duration-300 basis-full grow md:block`}>
             <div className="flex flex-col md:flex-row md:items-center md:justify-end py-2 md:py-0 md:ps-7">
               <Link className="py-3 ps-px sm:px-3 md:py-4 text-sm text-black hover:text-neutral-300 focus:outline-none focus:text-neutral-300" href="/" aria-current="page">Home</Link>
-            {/**  <Link className="py-3 ps-px sm:px-3 md:py-4 text-sm text-black hover:text-neutral-300 focus:outline-none focus:text-neutral-300" href="/events">Events</Link> **/}
+           {/*   <Link className="py-3 ps-px sm:px-3 md:py-4 text-sm text-black hover:text-neutral-300 focus:outline-none focus:text-neutral-300" href="/rooms">Rooms</Link> */}
               <Link className="py-3 ps-px sm:px-3 md:py-4 text-sm text-black hover:text-neutral-300 focus:outline-none focus:text-neutral-300" href="/about-us">About Us</Link>
               <Link className="py-3 ps-px sm:px-3 md:py-4 text-sm text-black hover:text-neutral-300 focus:outline-none focus:text-neutral-300" href="/privacy">Privacy</Link>
 
               
+
               {userData ? (
               <div>
                 <img 
@@ -97,6 +98,8 @@ const Navbar = () => {
           </div>
         </nav>
       </header>
+
+
     </>
   );
 };

@@ -34,7 +34,7 @@ const DonatorListModal = ({ isOpen, onClose, donators }) => {
 <div className="fixed inset-0 z-50 flex items-center justify-center overflow-auto bg-gray-900 bg-opacity-50">
 <div className="bg-white p-6 rounded-lg shadow-lg w-[96%] md:w-[66%] h-[450px] md:h-[500px] overflow-y-auto no-scrollbar">
     <div className="flex justify-between items-center border-b pb-2 mb-4">
-        <h2 className="text-xl font-bold text-gray-800">All Tourists</h2>
+        <h2 className="text-xl font-bold text-gray-800">All Tenants</h2>
         <div onClick={onClose} className="text-gray-600 hover:text-gray-900">
             <svg
       viewBox="0 0 512 512"

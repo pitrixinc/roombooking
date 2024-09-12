@@ -60,7 +60,7 @@ export function ExploreCourses({ filters, sortOption }) {
 
   useEffect(() => {
     const fetchProjects = async () => {
-      const querySnapshot = await getDocs(collection(db, 'events'));
+      const querySnapshot = await getDocs(collection(db, 'rooms'));
       const projectsList = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 
       // Filter approved projects
@@ -118,18 +118,18 @@ export function ExploreCourses({ filters, sortOption }) {
     <section className="px-8">
       <div className="container mx-auto mb-24 text-center">
         <Typography variant="h2" color="blue-gray">
-          Explore Events
+          Explore Rooms
         </Typography>
         <Typography
           variant="lead"
           className="mt-2 mx-auto w-full px-4 !text-gray-500 lg:w-6/12 lg:px-8"
         >
-          Experience top events: vibrant festivals, unique local fairs, historical tours, and exciting food & wine expos.
+          Explore our diverse room options to find the perfect fit for your stay, from luxurious suites to budget-friendly choices.
         </Typography>
       </div>
       <div className="container mx-auto grid grid-cols-1 gap-x-10 gap-y-24 md:grid-cols-2 lg:grid-cols-3 lg:gap-x-14">
       {currentProjects.map(project => (
-          <Card key={project.id} className="border" onClick={() => router.push(`/events/${project.id}?startDate=${project?.startDate}&endDate=${project?.deadline}`)}  >
+          <Card key={project.id} className="border" onClick={() => router.push(`/rooms/${project.id}?startDate=${project?.startDate}&endDate=${project?.deadline}`)}  >
           <CardHeader className="h-64">
             <Image
               width={768}

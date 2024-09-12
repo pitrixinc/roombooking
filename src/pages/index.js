@@ -16,7 +16,7 @@ export default function Home() {
     <main>
       <Navbar/>
       <Hero/>
-      <OutImpressiveStats/>
+     {/* <OutImpressiveStats/> */}
       <CoursesCategories />
       <ExploreCourses/>
       {/** <TESTIMONIAL/> **/}
