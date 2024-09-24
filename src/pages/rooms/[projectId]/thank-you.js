@@ -93,7 +93,7 @@ export default function ThankYouPage() {
               <p className="text-gray-700 mb-1"><span className="font-medium">Name:</span> {bookingDetails.projectTitle.length > 20 ? bookingDetails.projectTitle.slice(0,20) + '...' :  bookingDetails.projectTitle}</p>
               <p className="text-gray-700 mb-1"><span className="font-medium">Address:</span> {bookingDetails.eventLocation}</p>
               <p className="text-gray-700 mb-1"><span className="font-medium">Start Date:</span>{moment(bookingDetails.startDate).format('D MMMM, YYYY')}</p>
-              <p className="text-gray-700 mb-1"><span className="font-medium">Address:</span>{moment(bookingDetails.endDate).format('D MMMM, YYYY')}</p>
+              <p className="text-gray-700 mb-1"><span className="font-medium">End Date:</span>{moment(bookingDetails.endDate).format('D MMMM, YYYY')}</p>
             </div>
           </div>
 
