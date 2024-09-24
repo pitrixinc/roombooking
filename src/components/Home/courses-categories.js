@@ -49,7 +49,7 @@ export function CoursesCategories() {
 
   return (
     <section className="container mx-auto px-8 py-36">
-      <div className="mb-20 mt-5 grid place-items-center text-center">
+      <div className="mb-20 mt-10 grid place-items-center text-center">
         <Typography variant="h2" color="blue-gray" className="my-3 text-2xl">
           Room Categories
         </Typography>
