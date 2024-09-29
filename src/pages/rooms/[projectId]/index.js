@@ -238,6 +238,7 @@ const handleBooking = async () => {
       semester: semester,
       startDate: startDate,
       endDate: endDate,
+      status: 'Pending',
     //  hotelImage: selectedPackage !== 'Bronze' ? selectedHotel.photo : '', // Handle hotel info only if not Bronze
     //  hotelName: selectedPackage !== 'Bronze' ? selectedHotel.name : '',
     //  hotelFee: selectedPackage !== 'Bronze' ? selectedHotel.fee : 0,

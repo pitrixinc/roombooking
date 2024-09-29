@@ -49,7 +49,37 @@ const AccountSignup = () => {
 
   const handleSignUp = async (e) => {
     e.preventDefault();
-    setLoading(true);
+    
+
+    // Check if all required fields are filled
+  if (!email || !password || !username || !phoneNumber || !occupation || !address || !currency || !selectedImage) {
+    setLoading(false);
+    toast.warning("Please fill in all fields and select an image.");
+    console.log("Please fill in all fields and select an image.");
+    return;
+  }
+
+  // Validate Email with regex
+  const validateEmail = (email) => {
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailPattern.test(email);
+  };
+
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/(email)) {
+    toast.warning("Email format is incorrect.");
+    return;
+  }
+
+  if (!/^\d{10}$/.test(phoneNumber)) {
+    toast.warning("Phone number must be exactly 10 digits.");
+    return;
+  }
+
+  if (!selectedImage) {
+    toast.warning("Profile image is required.");
+  }
+
+  setLoading(true);
   
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
@@ -255,7 +285,7 @@ const AccountSignup = () => {
               },
             }}
           >
-            Join our community, where innovation meets trust in every transaction.
+            Join our community, where quality an affordable rooms are assured
           </p>
           {
             loading ? (<div lg='12' className='text-center'><h2 className='font-bold text-2xl mt-3'>Signing Up, Please Wait... <div role="status">
@@ -285,7 +315,7 @@ const AccountSignup = () => {
               background: 'transparent',
               outline: 'none',
             }}
-            required
+           // required
           />
           <input
             type="password"
@@ -302,7 +332,7 @@ const AccountSignup = () => {
               background: 'transparent',
               outline: 'none',
             }}
-            required
+          //  required
           />
           {/* Additional Fields for Sign Up */}
           <input
@@ -320,7 +350,7 @@ const AccountSignup = () => {
               background: 'transparent',
               outline: 'none',
             }}
-            required
+          //  required
           />
           <input
             type="tel"
@@ -337,7 +367,7 @@ const AccountSignup = () => {
               background: 'transparent',
               outline: 'none',
             }}
-            required
+       //     required
           />
           
           <input
@@ -355,7 +385,7 @@ const AccountSignup = () => {
               background: 'transparent',
               outline: 'none',
             }}
-            required
+        //    required
           /> 
           <input
             type="text"
@@ -372,7 +402,7 @@ const AccountSignup = () => {
               background: 'transparent',
               outline: 'none',
             }}
-            required
+        //    required
           />
           
            {/* Image Upload */}
@@ -387,7 +417,7 @@ const AccountSignup = () => {
                 accept="image/*"
                 onChange={handleImageChange}
                 style={{ display: 'none' }}
-                required
+          //      required
               />
             </label>
             {selectedImage && (

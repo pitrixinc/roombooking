@@ -74,7 +74,7 @@ const ProjectModal = ({ project, isOpen, closeModal }) => {
             <input type='text' className='w-full border rounded p-2' value={displayName} disabled />
           </div>
           <div>
-            <label className='block text-sm font-medium'>Event Image</label>
+            <label className='block text-sm font-medium'>Room Image</label>
             <div className="relative flex mb-4 items-center justify-center">
                <img className='rounded-2xl max-h-60 object-contain' src={image} alt="project Image"/>
             </div>
@@ -87,12 +87,9 @@ const ProjectModal = ({ project, isOpen, closeModal }) => {
             <label className='block text-sm font-medium'>Description</label>
             <textarea className='w-full border rounded p-2' value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
           </div>
+          
           <div>
-            <label className='block text-sm font-medium'>Category</label>
-            <input type='text' className='w-full border rounded p-2' value={category} onChange={(e) => setCategory(e.target.value)} />
-          </div>
-          <div>
-            <label className='block text-sm font-medium'>Goal</label>
+            <label className='block text-sm font-medium'>Amount</label>
             <input type='number' className='w-full border rounded p-2' value={goal} onChange={(e) => setGoal(e.target.value)} />
           </div>
           <div>
@@ -103,12 +100,9 @@ const ProjectModal = ({ project, isOpen, closeModal }) => {
             <label className='block text-sm font-medium'>FAQs</label>
             <textarea className='w-full border rounded p-2' value={faqs} onChange={(e) => setFaqs(e.target.value)}></textarea>
           </div>
+          
           <div>
-            <label className='block text-sm font-medium'>Rewards</label>
-            <textarea className='w-full border rounded p-2' value={rewards} onChange={(e) => setRewards(e.target.value)}></textarea>
-          </div>
-          <div>
-             <label className='block text-sm font-medium'>Status</label>
+             <label className='block text-sm font-medium'>Room Status</label>
              <select value={status} onChange={(e) => setStatus(e.target.value)} className='w-full border rounded p-2'>
                <option value="Pending">Pending</option>
                <option value="Approved">Approved</option>
@@ -116,9 +110,7 @@ const ProjectModal = ({ project, isOpen, closeModal }) => {
                <option value="Verification Needed">Verification Needed</option>
              </select>
           </div>
-          <div>
-             <label className='block text-sm font-medium'>Verify Event</label>
-          </div>
+          
           <button type='button' className='w-full bg-blue-500 text-white p-2 rounded mt-4' onClick={handleUpdate}>Update</button>
         </form>
       </div>

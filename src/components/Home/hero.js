@@ -219,7 +219,7 @@ const [semester, setSemester] = useState(1); // Default to 1 Semester
       
 
       <div className="container px-6 py-16 mx-auto text-center ">
-        <div className="max-w-lg mx-auto md:mt-[100px] bg-white/30 backdrop-blur-md md:p-4 p-2 rounded-lg shadow-md ">
+        <div className="md:max-w-[700px] max-w-lg mx-auto md:mt-[100px] bg-white/30 backdrop-blur-md md:p-4 p-2 rounded-lg shadow-md ">
           <h1 className="text-3xl font-semibold text-white dark:text-white lg:text-4xl">Find Your Perfect Getaway: Book Rooms Effortlessly and Instantly!</h1>
           <p className="mt-6 text-white dark:text-gray-300">
           Discover top-rated rooms in your favorite destinations with ease. Quick booking, seamless experience, unforgettable stays.
@@ -278,7 +278,7 @@ const [semester, setSemester] = useState(1); // Default to 1 Semester
             type="text"
             value={location}
             onChange={(e) => setLocation(e.target.value)}
-            placeholder="Where are you going?"
+            placeholder="Search room location"
             className="p-2 outline-none flex-grow"
           />
         </div> 

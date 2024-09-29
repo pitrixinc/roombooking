@@ -206,7 +206,7 @@ const AccountSignin = () => {
               },
             }}
           > 
-            Your financial journey continues with trust and cutting-edge security measures.
+            
           </p>
           {
             loading ? (<div lg='12' className='text-center'><h2 className='font-bold text-2xl mt-3'>Logging In, Please Wait... <div role="status">

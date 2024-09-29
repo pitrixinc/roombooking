@@ -76,9 +76,9 @@ export default function ThankYouPage() {
             <div className="p-4 border rounded-lg bg-gray-50 shadow-sm">
               <h2 className="font-semibold text-md md:text-xl mb-4">Order Info</h2>
               <p className="text-gray-700 mb-1"><span className="font-medium">Order Date:</span> {new Date(bookingDetails.timestamp).toLocaleString()}</p>              
-              <p className="text-gray-700 mb-1"><span className="font-medium">Status:</span> Positive</p>
+              <p className="text-gray-700 mb-1 capitalize"><span className="font-medium">Status:</span> {bookingDetails.status}</p>
               <p className="text-gray-700 mb-1"><span className="font-medium">Payment Status:</span> Paid</p>
-              <p className="text-gray-700 mb-1"><span className="font-medium">Payment Method:</span> Online Payement</p>
+              <p className="text-gray-700 mb-1"><span className="font-medium">Payment Method:</span> Online Payment</p>
               <p className="text-gray-700 mb-1"><span className="font-medium">Order ID:</span> {bookingDetails.bookingId}</p>
             </div>
             <div className="p-4 border rounded-lg bg-gray-50 shadow-sm">
