@@ -144,7 +144,8 @@ const handlePayment = async (e) => {
 
   if (!semester) {
     router.push('/rooms')
-    toat.warning('Please select your semester')
+    toast.warning('Please select your semester')
+    return
   }
 
   if (!startDate || !endDate) {
