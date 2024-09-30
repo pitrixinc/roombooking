@@ -52,7 +52,7 @@ const AccountSignup = () => {
     
 
     // Check if all required fields are filled
-  if (!email || !password || !username || !phoneNumber || !occupation || !address || !currency || !selectedImage) {
+  if (!email || !password || !username || !phoneNumber || !occupation || !address || !selectedImage) {
     setLoading(false);
     toast.warning("Please fill in all fields and select an image.");
     console.log("Please fill in all fields and select an image.");
